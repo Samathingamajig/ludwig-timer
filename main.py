@@ -33,10 +33,12 @@ class TimeCapture:
             return self.previous, False
 
         txt = pytesseract.image_to_string(img).strip()
-        if txt != self.previous:
-            self.previous = txt
-            return txt, True
-        return txt, False
+        if (
+            match := re.search(r"\d+:\d+:\d+", txt)
+        ) is not None and match.group() != self.previous:
+            self.previous = match.group()
+            return match.group(), True
+        return self.previous, False
 
 
 def handle_keys(tc: TimeCapture):
