@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: blanchedalmond;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+body {
+    display: grid;
+    place-items: center;
+}
+
+noscript h1 {
+    margin: 3rem;
+}
+
+#time {
+    font-size: 20vw;
+}
