@@ -8,6 +8,19 @@ import re
 
 cv2.namedWindow("capture", cv2.WINDOW_FREERATIO)
 
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@socketio.on("connect")
+def connect():
+    print("connected")
+
 
 class TimeCapture:
     def __init__(self, x: int = 0, y: int = 0, width: int = 0, height: int = 0):
@@ -73,16 +86,28 @@ def handle_keys(tc: TimeCapture):
 def capturing():
     print("capturing")
     tc = TimeCapture(79, 193, 197, 55)  # predetermined location
+    socketio.sleep(2)
     while True:
+        socketio.sleep(0.2 if tc.is_processing else 0)
         time, changed = tc.capture()
         if changed:
             print(time)
+            hours, minutes, seconds = time.split(":")
+            socketio.emit(
+                "time",
+                {
+                    "hours": hours,
+                    "minutes": minutes,
+                    "seconds": seconds,
+                },
+            )
         if handle_keys(tc):
             break
 
 
 def main():
-    capturing()
+    socketio.start_background_task(capturing)
+    socketio.run(app, host="0.0.0.0")
 
 
 if __name__ == "__main__":
