@@ -1,0 +1,8 @@
+eventlet
+Flask
+Flask-SocketIO
+greenlet
+Pillow
+numpy
+opencv-python
+py-tesseract
