@@ -85,7 +85,7 @@ def handle_keys(tc: TimeCapture):
 
 def capturing():
     print("capturing")
-    tc = TimeCapture(79, 193, 197, 55)  # predetermined location
+    tc = TimeCapture(128, 162, 331, 85)  # predetermined location
     socketio.sleep(2)
     while True:
         socketio.sleep(0.2 if tc.is_processing else 0)
@@ -107,7 +107,7 @@ def capturing():
 
 def main():
     socketio.start_background_task(capturing)
-    socketio.run(app, host="0.0.0.0")
+    socketio.run(app, host="0.0.0.0", port="3600")
 
 
 if __name__ == "__main__":
